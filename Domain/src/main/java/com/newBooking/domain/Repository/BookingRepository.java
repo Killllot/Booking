@@ -1,6 +1,6 @@
-package com.newBooking.Data.Repository;
+package com.newBooking.domain.Repository;
 
-import com.newBooking.Data.Entity.BookingEntity;
+import com.newBooking.domain.Entity.BookingEntity;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

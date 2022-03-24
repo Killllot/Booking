@@ -1,4 +1,4 @@
-package com.newBooking.Data.Entity;
+package com.newBooking.domain.Entity;
 
 import lombok.Data;
 import lombok.Setter;

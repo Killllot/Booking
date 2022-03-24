@@ -1,30 +1,29 @@
-package com.newBooking.Data.DTO.Room;
+package com.newBooking.DTO.Room;
 
-import com.newBooking.Data.Entity.RoomEntity;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
-public class createRoomDTO {
+public class createRoomDtoValidator {
 
     private Long id;
     @NotBlank(message = "Имя комнаты не должно быть пустым")
     @Size(min = 3, message = "Имя комнаты должно иметь более 3-х символов")
     private String name;
 
-    public createRoomDTO(Long id, String name) {
+    public createRoomDtoValidator(Long id, String name) {
         setId(id);
         setName(name);
     }
 
-    public createRoomDTO() {
+    public createRoomDtoValidator() {
 
     }
 
-    public static createRoomDTO toModel (RoomEntity roomEntity) {
-        createRoomDTO room = new createRoomDTO();
+    public static createRoomDtoValidator toModel (createRoomDtoValidator roomEntity) {
+        createRoomDtoValidator room = new createRoomDtoValidator();
         room.setId(room.getId());
         room.setName(room.getName());
 

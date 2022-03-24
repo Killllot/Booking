@@ -1,4 +1,4 @@
-package com.newBooking.Data.DTO.Booking;
+package com.newBooking.DTO.Booking;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
-public class createBookingDTO {
+public class createBookingDtoValidator {
 
     private Long id;
     private String comment;

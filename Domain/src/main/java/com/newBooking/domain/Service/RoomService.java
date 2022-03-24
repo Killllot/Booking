@@ -1,10 +1,9 @@
 package com.newBooking.domain.Service;
 
 
-import com.newBooking.Data.DTO.Room.Room;
-import com.newBooking.Data.Entity.RoomEntity;
-import com.newBooking.Data.Repository.BookingRepository;
-import com.newBooking.Data.Repository.RoomRepository;
+import com.newBooking.domain.Entity.RoomEntity;
+import com.newBooking.domain.Repository.BookingRepository;
+import com.newBooking.domain.Repository.RoomRepository;
 import com.newBooking.domain.Exeption.BookingException;
 import com.newBooking.domain.Exeption.ConfigurationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +34,11 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
-    public List<Room> getUnoccupiedRooms (LocalDateTime FromUtc, LocalDateTime ToUtc) throws BookingException, ConfigurationException {
+    public List<RoomEntity> getUnoccupiedRooms (LocalDateTime FromUtc, LocalDateTime ToUtc) throws BookingException, ConfigurationException {
         if( ChronoUnit.MINUTES.between(FromUtc, ToUtc) <= minimumBookingDuration) {
             throw new BookingException("Время бронирования не может быть отрицательным и должно быть больше "+ minimumBookingDuration +" минут");
         }
-        List<Room> list = roomRepository.findAll().stream()
+        List<RoomEntity> list = roomRepository.findAll().stream()
                 .filter(value -> value.getBookingEntityList().stream().noneMatch(data ->
                         data.getFromUtc().compareTo(FromUtc) <= 0
                                 && data.getToUtc().compareTo(FromUtc) >= 0
@@ -47,7 +46,6 @@ public class RoomService {
                                 && data.getToUtc().compareTo(ToUtc) >= 0
                                 || data.getFromUtc().compareTo(FromUtc) == 0
                                 && data.getToUtc().compareTo(ToUtc) == 0))
-                .map(value -> new Room(value.getId(),value.getName()))
                 .collect(Collectors.toList());
         return list;
     }

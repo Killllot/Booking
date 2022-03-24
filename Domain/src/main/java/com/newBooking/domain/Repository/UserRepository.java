@@ -1,6 +1,6 @@
-package com.newBooking.Data.Repository;
+package com.newBooking.domain.Repository;
 
-import com.newBooking.Data.Entity.UserEntity;
+import com.newBooking.domain.Entity.UserEntity;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<UserEntity, Long> {

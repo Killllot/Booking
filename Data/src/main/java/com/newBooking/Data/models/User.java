@@ -1,6 +1,7 @@
-package com.newBooking.Data.DTO.User;
+package com.newBooking.Data.models;
 
-import com.newBooking.Data.Entity.UserEntity;
+
+import com.newBooking.domain.Entity.UserEntity;
 import lombok.Data;
 
 @Data

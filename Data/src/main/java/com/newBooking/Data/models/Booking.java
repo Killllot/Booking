@@ -1,7 +1,8 @@
-package com.newBooking.Data.DTO.Booking;
+package com.newBooking.Data.models;
 
-import com.newBooking.Data.Entity.BookingEntity;
-import com.newBooking.Data.Entity.RoomEntity;
+
+import com.newBooking.domain.Entity.BookingEntity;
+import com.newBooking.domain.Entity.RoomEntity;
 import lombok.Data;
 
 import java.time.LocalDateTime;

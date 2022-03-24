@@ -1,14 +1,12 @@
 package com.newBooking.domain.Service;
 
 
-import com.newBooking.Data.DTO.Booking.createBookingDTO;
-import com.newBooking.Data.Entity.BookingEntity;
-import com.newBooking.Data.Entity.RoomEntity;
-import com.newBooking.Data.Entity.UserEntity;
-import com.newBooking.Data.Repository.BookingRepository;
-import com.newBooking.Data.Repository.RoomRepository;
-import com.newBooking.Data.Repository.UserRepository;
-import com.newBooking.Data.mapper.Booking.BookingMapper;
+import com.newBooking.domain.Entity.BookingEntity;
+import com.newBooking.domain.Entity.RoomEntity;
+import com.newBooking.domain.Entity.UserEntity;
+import com.newBooking.domain.Repository.BookingRepository;
+import com.newBooking.domain.Repository.RoomRepository;
+import com.newBooking.domain.Repository.UserRepository;
 import com.newBooking.domain.Exeption.BookingException;
 import com.newBooking.domain.Exeption.ConfigurationException;
 import com.newBooking.domain.Exeption.UserAlreadyExistException;
@@ -34,15 +32,14 @@ public class BookingService {
     @Autowired
     private RoomRepository roomRepository;
 
-    public BookingEntity createBooking(createBookingDTO booking) throws BookingException, UserAlreadyExistException, ConfigurationException {
-        BookingEntity saveBooking;
+    public BookingEntity createBooking(BookingEntity booking) throws BookingException, UserAlreadyExistException, ConfigurationException {
 
-        UserEntity user = userRepository.findById(booking.getUserId()).orElse(null);
+        UserEntity user = userRepository.findById(booking.getId()).orElse(null);
         if(user==null) {
             throw  new UserAlreadyExistException("Пользователя с таким id не существует");
         }
 
-        RoomEntity room = roomRepository.findById(booking.getRoomId()).orElse(null);
+        RoomEntity room = roomRepository.findById(booking.getId()).orElse(null);
         if (room==null) {
             throw new BookingException("Комнаты с таким id не существует");
         }
@@ -68,11 +65,10 @@ public class BookingService {
 
         List <RoomEntity> newlist = new ArrayList<>();
         newlist.add(room);
-        saveBooking = BookingMapper.fromDtoToEntity(booking);
-        saveBooking.setUser(user);
-        saveBooking.setRoomEntityList(newlist);
+        booking.setUser(user);
+        booking.setRoomEntityList(newlist);
 
-        return bookingRepository.save(saveBooking);
+        return bookingRepository.save(booking);
     }
 
     public BookingEntity getBooking(Long id) throws BookingException {

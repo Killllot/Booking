@@ -1,7 +1,10 @@
-package com.newBooking.domain.Controllers;
+package com.newBooking.Controllers;
 
-import com.newBooking.Data.DTO.User.createUserDTO;
+import com.newBooking.DTO.User.UserDto;
+import com.newBooking.DTO.User.createUserDtoValidator;
 import com.newBooking.Data.mapper.Booking.UserMapper;
+import com.newBooking.Data.models.Room;
+import com.newBooking.Data.models.User;
 import com.newBooking.domain.Exeption.ConfigurationException;
 import com.newBooking.domain.Exeption.UserAlreadyExistException;
 import com.newBooking.domain.Exeption.UserNameShortException;
@@ -25,9 +28,9 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity registration (@Valid @RequestBody createUserDTO user) {
+    public ResponseEntity registration (@Valid @RequestBody createUserDtoValidator user) {
         try {
-            userService.registration(UserMapper.fromDtoToEntity(user));
+            userService.registration(UserDto.fromDtoToEntity(user));
             return ResponseEntity.ok("Пользователь зарегистрирован");
         }
         catch (UserAlreadyExistException | UserNameShortException | ConfigurationException e) {
@@ -40,7 +43,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity getOneUser (@NotNull @RequestParam Long id) {
         try {
-            return ResponseEntity.ok(userService.getUser(id));
+            return ResponseEntity.ok(User.toModel(userService.getUser(id)));
         }
         catch (UserNotFoundException e) {
             Log.error("Error: " + e.getMessage());

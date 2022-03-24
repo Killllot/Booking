@@ -1,10 +1,7 @@
 package com.newBooking.domain.Service;
 
-
-
-import com.newBooking.Data.DTO.User.User;
-import com.newBooking.Data.Entity.UserEntity;
-import com.newBooking.Data.Repository.UserRepository;
+import com.newBooking.domain.Entity.UserEntity;
+import com.newBooking.domain.Repository.UserRepository;
 import com.newBooking.domain.Exeption.ConfigurationException;
 import com.newBooking.domain.Exeption.UserAlreadyExistException;
 import com.newBooking.domain.Exeption.UserNameShortException;
@@ -33,12 +30,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User getUser(Long id) throws UserNotFoundException {
+    public UserEntity getUser(Long id) throws UserNotFoundException {
         UserEntity user = userRepository.findById(id).orElse(null);
         if(user==null) {
             throw new UserNotFoundException("Пользователь с таким id не найден");
         }
-        return User.toModel(user);
+        return user;
     }
 
     public Long deleteUser(Long id) {

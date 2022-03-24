@@ -1,7 +1,9 @@
-package com.newBooking.domain.Controllers;
+package com.newBooking.Controllers;
 
-import com.newBooking.Data.DTO.Booking.Booking;
-import com.newBooking.Data.DTO.Booking.createBookingDTO;
+import com.newBooking.DTO.Booking.BookingDto;
+import com.newBooking.Data.models.Booking;
+import com.newBooking.DTO.Booking.createBookingDtoValidator;
+import com.newBooking.Data.mapper.Booking.BookingMapper;
 import com.newBooking.domain.Exeption.BookingException;
 import com.newBooking.domain.Service.BookingService;
 import lombok.extern.slf4j.Slf4j;
@@ -24,9 +26,9 @@ public class BookingController {
     private BookingService bookingService;
 
     @PostMapping
-    public ResponseEntity createBooking(@Valid  @RequestBody createBookingDTO book) {
+    public ResponseEntity createBooking(@Valid  @RequestBody createBookingDtoValidator book) {
         try{
-            return ResponseEntity.ok(Booking.toModel(bookingService.createBooking(book)));
+            return ResponseEntity.ok(Booking.toModel(bookingService.createBooking(BookingDto.fromDtoToEntity(book))));
         }
         catch (Exception e) {
             Log.error("Error: " + e.getMessage());

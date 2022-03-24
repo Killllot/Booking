@@ -1,8 +1,10 @@
-package com.newBooking.domain.Controllers;
+package com.newBooking.Controllers;
 
-import com.newBooking.Data.DTO.Room.Room;
-import com.newBooking.Data.DTO.Room.createRoomDTO;
+import com.newBooking.DTO.Room.RoomDto;
+import com.newBooking.Data.models.Room;
+import com.newBooking.DTO.Room.createRoomDtoValidator;
 import com.newBooking.Data.mapper.Booking.RoomMapper;
+;
 import com.newBooking.domain.Service.RoomService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -27,9 +30,9 @@ public class RoomController {
     private RoomService roomService;
 
     @PostMapping
-    public ResponseEntity createRoom(@Valid @RequestBody createRoomDTO room) {
+    public ResponseEntity createRoom(@Valid @RequestBody createRoomDtoValidator room) {
         try{
-            return ResponseEntity.ok(Room.toModel(roomService.createRoom(RoomMapper.fromDtoToEntity(room))));
+            return ResponseEntity.ok(Room.toModel(roomService.createRoom(RoomDto.fromDtoToEntity(room))));
         }
         catch (Exception e) {
             Log.error("Error: " + e.getMessage());
@@ -45,7 +48,9 @@ public class RoomController {
                                                           @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
                                                                   LocalDateTime ToUtc) {
         try {
-            return ResponseEntity.ok(roomService.getUnoccupiedRooms(FromUtc,ToUtc));
+            return ResponseEntity.ok(roomService.getUnoccupiedRooms(FromUtc,ToUtc).stream()
+                    .map(value ->new Room(value.getId(), value.getName()))
+                    .collect(Collectors.toList()));
         }
         catch (Exception e) {
             Log.error("Error: " + e.getMessage());
