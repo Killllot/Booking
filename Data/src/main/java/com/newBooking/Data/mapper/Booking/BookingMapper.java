@@ -1,7 +1,6 @@
 package com.newBooking.Data.mapper.Booking;
 
 
-import com.newBooking.domain.Entity.BookingEntity;
 
 public class BookingMapper {
 

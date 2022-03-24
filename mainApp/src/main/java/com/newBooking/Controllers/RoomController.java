@@ -3,8 +3,6 @@ package com.newBooking.Controllers;
 import com.newBooking.DTO.Room.RoomDto;
 import com.newBooking.Data.models.Room;
 import com.newBooking.DTO.Room.createRoomDtoValidator;
-import com.newBooking.Data.mapper.Booking.RoomMapper;
-;
 import com.newBooking.domain.Service.RoomService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

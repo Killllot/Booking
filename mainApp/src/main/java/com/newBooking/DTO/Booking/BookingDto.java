@@ -1,6 +1,12 @@
 package com.newBooking.DTO.Booking;
 
 import com.newBooking.domain.Entity.BookingEntity;
+import com.newBooking.domain.Entity.RoomEntity;
+import com.newBooking.domain.Entity.UserEntity;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class BookingDto {
 
@@ -10,6 +16,8 @@ public class BookingDto {
         booking.setFromUtc(dto.getFromUtc());
         booking.setToUtc(dto.getToUtc());
         booking.setComment(dto.getComment());
+        booking.setUser(new UserEntity(dto.getUserId(), null));
+        booking.setRoomId(dto.getRoomId());
         return booking;
 
    }

@@ -15,7 +15,6 @@ public class RoomEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Min(value = 1, message = "id must be more 0")
     private Long id;
-    @NotBlank(message = "can't be blank")
     private String name;
 
 
