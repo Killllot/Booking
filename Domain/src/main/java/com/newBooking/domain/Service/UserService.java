@@ -19,6 +19,10 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     public UserEntity registration (UserEntity user) throws UserAlreadyExistException, UserNameShortException, ConfigurationException {
         if(userRepository.findByUserName(user.getUserName())!=null) {
             throw  new UserAlreadyExistException("Пользователь с таким именем уже существует");
@@ -32,14 +36,11 @@ public class UserService {
 
     public UserEntity getUser(Long id) throws UserNotFoundException {
         UserEntity user = userRepository.findById(id).orElse(null);
-        if(user==null) {
-            throw new UserNotFoundException("Пользователь с таким id не найден");
-        }
         return user;
     }
 
-    public Long deleteUser(Long id) {
+    public boolean deleteUser(Long id) {
         userRepository.deleteById(id);
-        return id;
+        return true;
     }
 }

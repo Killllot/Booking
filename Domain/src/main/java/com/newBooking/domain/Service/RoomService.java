@@ -24,8 +24,10 @@ public class RoomService {
 
     @Autowired
     private RoomRepository roomRepository;
-    @Autowired
-    private BookingRepository bookingRepository;
+
+    public RoomService(RoomRepository roomRepository) {
+        this.roomRepository = roomRepository;
+    }
 
     public RoomEntity createRoom(RoomEntity room) {
         if(roomRepository.findByName(room.getName()).orElse(null)!=null){
