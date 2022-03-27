@@ -4,10 +4,6 @@ import com.newBooking.domain.Entity.BookingEntity;
 import com.newBooking.domain.Entity.RoomEntity;
 import com.newBooking.domain.Entity.UserEntity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class BookingDto {
 
     public static BookingEntity fromDtoToEntity(createBookingDtoValidator dto) {

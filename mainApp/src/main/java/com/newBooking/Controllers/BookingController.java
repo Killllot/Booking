@@ -37,17 +37,6 @@ public class BookingController {
         }
     }
 
-//    @PostMapping
-//    public ResponseEntity createBooking(@Valid  @RequestBody createBookingDtoValidator book) {
-//        try{
-//            return ResponseEntity.ok(Booking.toModel(bookingService.createBooking(book)));
-//        }
-//        catch (Exception e) {
-//            Log.error("Error: " + e.getMessage());
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
-
     @GetMapping
     public ResponseEntity getBooking (@RequestParam Long bookingId) {
         try {
