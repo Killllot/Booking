@@ -29,7 +29,7 @@ public class BookingController {
     @PostMapping
     public ResponseEntity createBooking(@Valid  @RequestBody createBookingDtoValidator book) {
         try{
-            return ResponseEntity.ok(Booking.toModel(bookingService.createBooking(BookingDto.fromDtoToEntity(book))));
+            return ResponseEntity.ok(BookingMapper.toModel(bookingService.createBooking(BookingDto.fromDtoToEntity(book))));
         }
         catch (Exception e) {
             Log.error("Error: " + e.getMessage());
@@ -51,7 +51,7 @@ public class BookingController {
     @GetMapping
     public ResponseEntity getBooking (@RequestParam Long bookingId) {
         try {
-            return ResponseEntity.ok(Booking.toModel(bookingService.getBooking(bookingId)));
+            return ResponseEntity.ok(BookingMapper.toModel(bookingService.getBooking(bookingId)));
         } catch (BookingException e) {
 
             Log.error("Error: " + e.getMessage());

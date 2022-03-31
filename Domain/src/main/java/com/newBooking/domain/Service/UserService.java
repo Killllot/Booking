@@ -1,7 +1,7 @@
 package com.newBooking.domain.Service;
 
 import com.newBooking.domain.Entity.UserEntity;
-import com.newBooking.domain.Repository.UserRepository;
+import com.newBooking.domain.Repository.IUserRepository;
 import com.newBooking.domain.Exeption.ConfigurationException;
 import com.newBooking.domain.Exeption.UserAlreadyExistException;
 import com.newBooking.domain.Exeption.UserNameShortException;
@@ -17,7 +17,7 @@ public class UserService {
     private long minimumNameLength;
 
     @Autowired
-    private UserRepository userRepository;
+    private IUserRepository userRepository;
 
     public UserEntity registration (UserEntity user) throws UserAlreadyExistException, UserNameShortException, ConfigurationException {
         if(userRepository.findByUserName(user.getUserName())!=null) {

@@ -14,7 +14,6 @@ public class BookingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Min(value = 1, message = "id must be more 0")
     private Long id;
     private LocalDateTime fromUtc;
     private LocalDateTime toUtc;

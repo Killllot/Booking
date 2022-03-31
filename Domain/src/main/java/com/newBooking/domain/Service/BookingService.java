@@ -4,11 +4,10 @@ package com.newBooking.domain.Service;
 import com.newBooking.domain.Entity.BookingEntity;
 import com.newBooking.domain.Entity.RoomEntity;
 import com.newBooking.domain.Entity.UserEntity;
-import com.newBooking.domain.Repository.BookingRepository;
-import com.newBooking.domain.Repository.RoomRepository;
-import com.newBooking.domain.Repository.UserRepository;
+import com.newBooking.domain.Repository.IBookingRepository;
+import com.newBooking.domain.Repository.IRoomRepository;
+import com.newBooking.domain.Repository.IUserRepository;
 import com.newBooking.domain.Exeption.BookingException;
-import com.newBooking.domain.Exeption.ConfigurationException;
 import com.newBooking.domain.Exeption.UserAlreadyExistException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,11 +25,11 @@ public class BookingService {
     private long minimumBookingDuration;
 
     @Autowired
-    private BookingRepository bookingRepository;
+    private IBookingRepository bookingRepository;
     @Autowired
-    private UserRepository userRepository;
+    private IUserRepository userRepository;
     @Autowired
-    private RoomRepository roomRepository;
+    private IRoomRepository roomRepository;
 
     public BookingEntity createBooking(BookingEntity booking) throws BookingException, UserAlreadyExistException {
 

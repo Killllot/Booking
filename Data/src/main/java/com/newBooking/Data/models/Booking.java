@@ -19,17 +19,4 @@ public class Booking {
     private String Comment;
     List<Map<Long,String>> roomEntityList;
 
-    public static Booking toModel(BookingEntity book) {
-        Booking booking = new Booking();
-        booking.setId(book.getId());
-        booking.setFromUtc(book.getFromUtc());
-        booking.setToUtc(book.getToUtc());
-        booking.setComment(book.getComment());
-        var list = book.getRoomEntityList().stream()
-                .collect(Collectors.toMap(RoomEntity::getId,RoomEntity::getName));
-        booking.setRoomEntityList(List.of(list));
-
-        return booking;
-    }
-
 }

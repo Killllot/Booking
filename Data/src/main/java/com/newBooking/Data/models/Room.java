@@ -19,12 +19,4 @@ public class Room {
 
     }
 
-    public static Room toModel (RoomEntity roomEntity) {
-        Room room = new Room();
-        room.setId(roomEntity.getId());
-        room.setName(roomEntity.getName());
-
-        return room;
-    }
-
 }

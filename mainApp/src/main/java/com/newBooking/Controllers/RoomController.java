@@ -1,6 +1,7 @@
 package com.newBooking.Controllers;
 
 import com.newBooking.DTO.Room.RoomDto;
+import com.newBooking.Data.mapper.Room.RoomMapper;
 import com.newBooking.Data.models.Room;
 import com.newBooking.DTO.Room.createRoomDtoValidator;
 import com.newBooking.domain.Service.RoomService;
@@ -30,7 +31,7 @@ public class RoomController {
     @PostMapping
     public ResponseEntity createRoom(@Valid @RequestBody createRoomDtoValidator room) {
         try{
-            return ResponseEntity.ok(Room.toModel(roomService.createRoom(RoomDto.fromDtoToEntity(room))));
+            return ResponseEntity.ok(RoomMapper.toModel(roomService.createRoom(RoomDto.fromDtoToEntity(room))));
         }
         catch (Exception e) {
             Log.error("Error: " + e.getMessage());

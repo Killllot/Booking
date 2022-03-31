@@ -2,8 +2,7 @@ package com.newBooking.Controllers;
 
 import com.newBooking.DTO.User.UserDto;
 import com.newBooking.DTO.User.createUserDtoValidator;
-import com.newBooking.Data.mapper.Booking.UserMapper;
-import com.newBooking.Data.models.Room;
+import com.newBooking.Data.mapper.User.UserMapper;
 import com.newBooking.Data.models.User;
 import com.newBooking.domain.Exeption.ConfigurationException;
 import com.newBooking.domain.Exeption.UserAlreadyExistException;
@@ -43,7 +42,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity getOneUser (@NotNull @RequestParam Long id) {
         try {
-            return ResponseEntity.ok(User.toModel(userService.getUser(id)));
+            return ResponseEntity.ok(UserMapper.toModel(userService.getUser(id)));
         }
         catch (UserNotFoundException e) {
             Log.error("Error: " + e.getMessage());

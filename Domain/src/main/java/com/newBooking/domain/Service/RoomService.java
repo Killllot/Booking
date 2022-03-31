@@ -2,8 +2,8 @@ package com.newBooking.domain.Service;
 
 
 import com.newBooking.domain.Entity.RoomEntity;
-import com.newBooking.domain.Repository.BookingRepository;
-import com.newBooking.domain.Repository.RoomRepository;
+import com.newBooking.domain.Repository.IBookingRepository;
+import com.newBooking.domain.Repository.IRoomRepository;
 import com.newBooking.domain.Exeption.BookingException;
 import com.newBooking.domain.Exeption.ConfigurationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +23,9 @@ public class RoomService {
     private long minimumBookingDuration;
 
     @Autowired
-    private RoomRepository roomRepository;
+    private IRoomRepository roomRepository;
     @Autowired
-    private BookingRepository bookingRepository;
+    private IBookingRepository bookingRepository;
 
     public RoomEntity createRoom(RoomEntity room) {
         if(roomRepository.findByName(room.getName()).orElse(null)!=null){
