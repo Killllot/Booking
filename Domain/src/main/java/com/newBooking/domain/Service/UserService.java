@@ -19,21 +19,21 @@ public class UserService {
     @Autowired
     private IUserRepository userRepository;
 
-    public UserEntity registration (UserEntity user) throws UserAlreadyExistException, UserNameShortException, ConfigurationException {
+    public UserEntity registration (UserEntity user)  {
         if(userRepository.findByUserName(user.getUserName())!=null) {
-            throw  new UserAlreadyExistException("Пользователь с таким именем уже существует");
+            throw  new RuntimeException("Пользователь с таким именем уже существует");
         }
         if(user.getUserName().length()< minimumNameLength) {
-            throw  new UserNameShortException("Имя пользователя должно быть длиннее " +
+            throw  new RuntimeException("Имя пользователя должно быть длиннее " +
                     minimumNameLength + " символов");
         }
         return userRepository.save(user);
     }
 
-    public UserEntity getUser(Long id) throws UserNotFoundException {
+    public UserEntity getUser(Long id) {
         UserEntity user = userRepository.findById(id).orElse(null);
         if(user==null) {
-            throw new UserNotFoundException("Пользователь с таким id не найден");
+            throw new RuntimeException("Пользователь с таким id не найден");
         }
         return user;
     }

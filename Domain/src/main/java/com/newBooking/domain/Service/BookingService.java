@@ -31,20 +31,20 @@ public class BookingService {
     @Autowired
     private IRoomRepository roomRepository;
 
-    public BookingEntity createBooking(BookingEntity booking) throws BookingException, UserAlreadyExistException {
+    public BookingEntity createBooking(BookingEntity booking)  {
 
         UserEntity user = userRepository.findById(booking.getUser().getId()).orElse(null);
         if(user==null) {
-            throw  new UserAlreadyExistException("Пользователя с таким id не существует");
+            throw  new RuntimeException("Пользователя с таким id не существует");
         }
 
         RoomEntity room = roomRepository.findById(booking.getRoomId()).orElse(null);
         if (room==null) {
-            throw new BookingException("Комнаты с таким id не существует");
+            throw new RuntimeException("Комнаты с таким id не существует");
         }
 
         if( ChronoUnit.MINUTES.between(booking.getFromUtc(), booking.getToUtc()) < minimumBookingDuration) {
-            throw new BookingException("Время бронирования не может быть отрицательным и должно быть больше "+ minimumBookingDuration +" минут");
+            throw new RuntimeException("Время бронирования не может быть отрицательным и должно быть больше "+ minimumBookingDuration +" минут");
         }
 
         List<BookingEntity> list = bookingRepository.findAll();
@@ -59,7 +59,7 @@ public class BookingService {
                 &&value.getToUtc().compareTo(booking.getToUtc())==0
         );
         if(alreadyCreatedBooking) {
-            throw new BookingException("Бронирование с такой датой уже существует");
+            throw new RuntimeException("Бронирование с такой датой уже существует");
         }
 
         List <RoomEntity> newlist = new ArrayList<>();
@@ -70,51 +70,10 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
-//    public BookingEntity createBooking(createBookingDtoValidator booking) throws BookingException, UserAlreadyExistException, ConfigurationException {
-//        BookingEntity saveBooking;
-//
-//        UserEntity user = userRepository.findById(booking.getUserId()).orElse(null);
-//        if(user==null) {
-//            throw  new UserAlreadyExistException("Пользователя с таким id не существует");
-//        }
-//
-//        RoomEntity room = roomRepository.findById(booking.getRoomId()).orElse(null);
-//        if (room==null) {
-//            throw new BookingException("Комнаты с таким id не существует");
-//        }
-//
-//        if( ChronoUnit.MINUTES.between(booking.getFromUtc(), booking.getToUtc()) < minimumBookingDuration) {
-//            throw new BookingException("Время бронирования не может быть отрицательным и должно быть больше "+ minimumBookingDuration +" минут");
-//        }
-//
-//        List<BookingEntity> list = bookingRepository.findAll();
-//        var alreadyCreatedBooking = list.stream()
-//                .filter(value -> value.getRoomEntityList().contains(room))
-//                .anyMatch(value ->
-//                        value.getFromUtc().compareTo(booking.getFromUtc())<=0
-//                                &&value.getToUtc().compareTo(booking.getFromUtc())>=0
-//                                ||value.getFromUtc().compareTo(booking.getToUtc())<=0
-//                                &&value.getToUtc().compareTo(booking.getToUtc())>=0
-//                                ||value.getFromUtc().compareTo(booking.getFromUtc())==0
-//                                &&value.getToUtc().compareTo(booking.getToUtc())==0
-//                );
-//        if(alreadyCreatedBooking) {
-//            throw new BookingException("Бронирование с такой датой уже существует");
-//        }
-//
-//        List <RoomEntity> newlist = new ArrayList<>();
-//        newlist.add(room);
-//        saveBooking = BookingMapper.fromDtoToEntity(booking);
-//        saveBooking.setUser(user);
-//        saveBooking.setRoomEntityList(newlist);
-//
-//        return bookingRepository.save(saveBooking);
-//    }
-
-    public BookingEntity getBooking(Long id) throws BookingException {
+    public BookingEntity getBooking(Long id) {
         BookingEntity booking = bookingRepository.findById(id).orElse(null);
         if(booking==null) {
-            throw new BookingException("Бронирование с таким id не найдено");
+            throw new RuntimeException("Бронирование с таким id не найдено");
         }
         return booking;
     }

@@ -28,26 +28,15 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity registration (@Valid @RequestBody createUserDtoValidator user) {
-        try {
-            userService.registration(UserDto.fromDtoToEntity(user));
-            return ResponseEntity.ok("Пользователь зарегистрирован");
-        }
-        catch (UserAlreadyExistException | UserNameShortException | ConfigurationException e) {
-            Log.error("Error: " + e.getMessage());
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+        userService.registration(UserDto.fromDtoToEntity(user));
+        return ResponseEntity.ok("Пользователь зарегистрирован");
 
     }
 
     @GetMapping
     public ResponseEntity getOneUser (@NotNull @RequestParam Long id) {
-        try {
-            return ResponseEntity.ok(UserMapper.toModel(userService.getUser(id)));
-        }
-        catch (UserNotFoundException e) {
-            Log.error("Error: " + e.getMessage());
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+
+        return ResponseEntity.ok(UserMapper.toModel(userService.getUser(id)));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@NotNull @PathVariable Long id) {

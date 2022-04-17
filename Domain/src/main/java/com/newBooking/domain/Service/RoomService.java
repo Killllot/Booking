@@ -34,9 +34,9 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
-    public List<RoomEntity> getUnoccupiedRooms (LocalDateTime FromUtc, LocalDateTime ToUtc) throws BookingException, ConfigurationException {
+    public List<RoomEntity> getUnoccupiedRooms (LocalDateTime FromUtc, LocalDateTime ToUtc) {
         if( ChronoUnit.MINUTES.between(FromUtc, ToUtc) <= minimumBookingDuration) {
-            throw new BookingException("Время бронирования не может быть отрицательным и должно быть больше "+ minimumBookingDuration +" минут");
+            throw new RuntimeException("Время бронирования не может быть отрицательным и должно быть больше "+ minimumBookingDuration +" минут");
         }
         List<RoomEntity> list = roomRepository.findAll().stream()
                 .filter(value -> value.getBookingEntityList().stream().noneMatch(data ->

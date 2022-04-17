@@ -30,31 +30,22 @@ public class RoomController {
 
     @PostMapping
     public ResponseEntity createRoom(@Valid @RequestBody createRoomDtoValidator room) {
-        try{
-            return ResponseEntity.ok(RoomMapper.toModel(roomService.createRoom(RoomDto.fromDtoToEntity(room))));
-        }
-        catch (Exception e) {
-            Log.error("Error: " + e.getMessage());
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+
+        return ResponseEntity.ok(RoomMapper.toModel(roomService.createRoom(RoomDto.fromDtoToEntity(room))));
+
     }
 
     @GetMapping
-    public ResponseEntity<List<Room>> getUnoccupiedRooms (@NotNull @RequestParam("FromUtc")
-                                                              @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-                                                                      LocalDateTime FromUtc,
-                                                          @NotNull @RequestParam("ToUtc")
-                                                          @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
-                                                                  LocalDateTime ToUtc) {
-        try {
-            return ResponseEntity.ok(roomService.getUnoccupiedRooms(FromUtc,ToUtc).stream()
-                    .map(value ->new Room(value.getId(), value.getName()))
+    public ResponseEntity<List<Room>> getUnoccupiedRooms(@NotNull @RequestParam("FromUtc")
+                                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+                                                                 LocalDateTime FromUtc,
+                                                         @NotNull @RequestParam("ToUtc")
+                                                         @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+                                                                 LocalDateTime ToUtc) {
+
+        return ResponseEntity.ok(roomService.getUnoccupiedRooms(FromUtc, ToUtc).stream()
+                    .map(value -> new Room(value.getId(), value.getName()))
                     .collect(Collectors.toList()));
-        }
-        catch (Exception e) {
-            Log.error("Error: " + e.getMessage());
-            ResponseEntity.badRequest().body(e.getMessage());
-        }
-        return null;
+
     }
 }

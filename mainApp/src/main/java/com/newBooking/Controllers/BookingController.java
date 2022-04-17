@@ -9,6 +9,7 @@ import com.newBooking.domain.Service.BookingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -28,35 +29,17 @@ public class BookingController {
 
     @PostMapping
     public ResponseEntity createBooking(@Valid  @RequestBody createBookingDtoValidator book) {
-        try{
-            return ResponseEntity.ok(BookingMapper.toModel(bookingService.createBooking(BookingDto.fromDtoToEntity(book))));
-        }
-        catch (Exception e) {
-            Log.error("Error: " + e.getMessage());
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+            return ResponseEntity
+                    .ok(BookingMapper.toModel(bookingService.createBooking(BookingDto.fromDtoToEntity(book))));
     }
 
-//    @PostMapping
-//    public ResponseEntity createBooking(@Valid  @RequestBody createBookingDtoValidator book) {
-//        try{
-//            return ResponseEntity.ok(Booking.toModel(bookingService.createBooking(book)));
-//        }
-//        catch (Exception e) {
-//            Log.error("Error: " + e.getMessage());
-//            return ResponseEntity.badRequest().body(e.getMessage());
-//        }
-//    }
-
     @GetMapping
-    public ResponseEntity getBooking (@RequestParam Long bookingId) {
-        try {
-            return ResponseEntity.ok(BookingMapper.toModel(bookingService.getBooking(bookingId)));
-        } catch (BookingException e) {
+    public ResponseEntity<Booking> getBooking (@RequestParam Long bookingId) {
+                    return new ResponseEntity<>(BookingMapper.toModel(bookingService.getBooking(bookingId)), HttpStatus.FOUND);
+    }
 
-            Log.error("Error: " + e.getMessage());
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-
+    @GetMapping("/test")
+    public ResponseEntity testMess () {
+        return ResponseEntity.ok("This is message");
     }
 }
