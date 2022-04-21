@@ -8,6 +8,7 @@
         <module>Data</module>
         <module>Domain</module>
         <module>mainApp</module>
+        <module>Authentification</module>
     </modules>
 
     <parent>
@@ -27,6 +28,15 @@
         <java.version>11</java.version>
     </properties>
     <dependencies>
+
+
+        <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.11.2</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

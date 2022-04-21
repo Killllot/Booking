@@ -3,7 +3,7 @@ package com.newBooking.Controllers;
 import com.newBooking.DTO.Room.RoomDto;
 import com.newBooking.Data.mapper.Room.RoomMapper;
 import com.newBooking.Data.models.Room;
-import com.newBooking.DTO.Room.createRoomDtoValidator;
+import com.newBooking.DTO.Room.RoomDtoValidator;
 import com.newBooking.domain.Service.RoomService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import serilogj.Log;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -22,14 +21,14 @@ import java.util.stream.Collectors;
 @Slf4j
 @RestController
 @Validated
-@RequestMapping("/room")
+@RequestMapping("/api/room")
 public class RoomController {
 
     @Autowired
     private RoomService roomService;
 
     @PostMapping
-    public ResponseEntity createRoom(@Valid @RequestBody createRoomDtoValidator room) {
+    public ResponseEntity createRoom(@Valid @RequestBody RoomDtoValidator room) {
 
         return ResponseEntity.ok(RoomMapper.toModel(roomService.createRoom(RoomDto.fromDtoToEntity(room))));
 
