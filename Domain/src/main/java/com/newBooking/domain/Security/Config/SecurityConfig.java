@@ -15,7 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtTokenProvider jwtTokenProvider;
 
-    private final static String ADMIN_ENDPOINT = "/api/**";
+    private final static String ADMIN_ENDPOINT = "/api/admin/**";
     private final static String LOGIN_ENDPOINT = "/api/auth/login";
 
     @Autowired

@@ -34,7 +34,7 @@ public class UserController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@NotNull @PathVariable Long id) {
-        Log.error("Error: Not found deleted User with id " + id);
+
         return ResponseEntity.ok("Удален пользователь");
     }
 }

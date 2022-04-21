@@ -13,24 +13,25 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
-public class JWTUserDetailsService implements UserDetailsService {
+public class JwtUserDetailsService implements UserDetailsService {
 
     private final UserService userService;
 
     @Autowired
-    public JWTUserDetailsService(UserService userService) {
+    public JwtUserDetailsService(UserService userService) {
         this.userService = userService;
     }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserEntity user = userService.findByUsername(username );
+        UserEntity user = userService.findByUsername(username);
 
-        if(user == null) {
-            throw  new UsernameNotFoundException("User with username:" + username + " not found ");
+        if (user == null) {
+            throw new UsernameNotFoundException("User with username: " + username + " not found");
         }
-        JwtUser jwtUser = JwtUserFactory.create(user);
-        log.info("IN loadUserByUsername - user with username: {} ", username);
 
+        JwtUser jwtUser = JwtUserFactory.create(user);
+        log.info("IN loadUserByUsername - user with username: {} successfully loaded", username);
         return jwtUser;
     }
 }

@@ -27,11 +27,11 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Component
 public class JwtTokenProvider {
 
+    @Value("${jwt.token.secret}")
+    private String secret;
 
-    private String secret="jwtTest";
-
-    /*@Value("${jwt.token.expired}")*/
-    private String validityInMilliseconds="36000000";
+    @Value("${jwt.token.expired}")
+    private String validityInMilliseconds;
 
     @Autowired
     private UserDetailsService userDetailsService;
