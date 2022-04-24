@@ -11,7 +11,7 @@ public class UserMapper {
     public static User toModel(UserEntity entity) {
         User model = new User();
         model.setId(entity.getId());
-        model.setUserName(entity.getUserName());
+        model.setUserName(entity.getUsername());
         return model;
     }
 }

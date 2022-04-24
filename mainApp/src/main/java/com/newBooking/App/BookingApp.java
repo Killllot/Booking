@@ -21,9 +21,8 @@ import static serilogj.sinks.seq.SeqSinkConfigurator.seq;
 
 
 @EnableJpaRepositories("com.newBooking")
-@EntityScan("com.newBooking")
+@EntityScan("com.newBooking.domain")
 @ComponentScan("com.newBooking")
-@Configuration
 @PropertySource("classpath:mySecretProperties.properties")
 @SpringBootApplication(scanBasePackages = "com.newBooking")
 public class BookingApp {

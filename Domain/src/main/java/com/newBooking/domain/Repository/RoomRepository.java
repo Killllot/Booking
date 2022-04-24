@@ -2,12 +2,13 @@ package com.newBooking.domain.Repository;
 
 
 import com.newBooking.domain.Entity.RoomEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface IRoomRepository extends CrudRepository<RoomEntity,Long> {
+public interface RoomRepository extends JpaRepository<RoomEntity,Long> {
     Optional<RoomEntity> findByName(String name);
     List<RoomEntity> findAll();
 }

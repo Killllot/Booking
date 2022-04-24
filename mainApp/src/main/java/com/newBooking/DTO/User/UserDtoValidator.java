@@ -20,7 +20,7 @@ public class UserDtoValidator {
     public static UserDtoValidator toModel(UserEntity entity) {
         UserDtoValidator model = new UserDtoValidator();
         model.setId(entity.getId());
-        model.setUserName(entity.getUserName());
+        model.setUserName(entity.getUsername());
         return model;
     }
 
