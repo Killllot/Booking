@@ -1,9 +1,8 @@
 package com.newBooking.domain.Service.impl;
 
-import com.newBooking.domain.Entity.Role;
 import com.newBooking.domain.Entity.UserEntity;
-import com.newBooking.domain.Repository.IRoleRepository;
-import com.newBooking.domain.Repository.IUserRepository;
+import com.newBooking.domain.Repository.RoleRepository;
+import com.newBooking.domain.Repository.UserRepository;
 import com.newBooking.domain.Service.Interface.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -21,14 +19,14 @@ public class UserService implements IUserService {
     @Value("${const.minimumUserNameLength}")
     private long minimumNameLength;
 
-    private final IUserRepository userRepository;
+    private final UserRepository userRepository;
 
-    private final IRoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(IUserRepository userRepository, IRoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
@@ -36,14 +34,14 @@ public class UserService implements IUserService {
 
     @Override
     public UserEntity registration (UserEntity user)  {
-        if(userRepository.findByUserName(user.getUserName())!=null) {
+        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
             throw  new RuntimeException("Пользователь с таким именем уже существует");
         }
-        if(user.getUserName().length()< minimumNameLength) {
+        if(user.getUsername().length()< minimumNameLength) {
             throw  new RuntimeException("Имя пользователя должно быть длиннее " +
                     minimumNameLength + " символов");
         }
-        Role role = roleRepository.findByName("ROLE_USER");
+        /*Role role = roleRepository.findByName("ROLE_USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(role);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -52,7 +50,8 @@ public class UserService implements IUserService {
         UserEntity registerUser = userRepository.save(user);
 
         log.info("IN register - user: {} successfully registered",registerUser);
-        return registerUser;
+        return registerUser;*/
+        return userRepository.save(user);
     }
 
     @Override
@@ -64,7 +63,7 @@ public class UserService implements IUserService {
 
     @Override
     public UserEntity findByUsername(String name) {
-        UserEntity user = userRepository.findByUserName(name);
+        UserEntity user = userRepository.findByUsername(name).orElse(null);
         log.info("IN findByUsername - user: {} found by username: {}",user, name);
         return user;
     }

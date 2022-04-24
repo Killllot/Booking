@@ -8,7 +8,6 @@
         <module>Data</module>
         <module>Domain</module>
         <module>mainApp</module>
-        <module>Authentification</module>
     </modules>
 
     <parent>

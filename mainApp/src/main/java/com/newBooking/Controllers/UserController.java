@@ -1,14 +1,9 @@
 package com.newBooking.Controllers;
 
 import com.newBooking.DTO.User.UserDto;
-import com.newBooking.DTO.User.createUserDtoValidator;
+import com.newBooking.DTO.User.UserDtoValidator;
 import com.newBooking.Data.mapper.User.UserMapper;
-import com.newBooking.Data.models.User;
-import com.newBooking.domain.Exeption.ConfigurationException;
-import com.newBooking.domain.Exeption.UserAlreadyExistException;
-import com.newBooking.domain.Exeption.UserNameShortException;
-import com.newBooking.domain.Exeption.UserNotFoundException;
-import com.newBooking.domain.Service.UserService;
+import com.newBooking.domain.Service.impl.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity registration (@Valid @RequestBody createUserDtoValidator user) {
+    public ResponseEntity registration (@Valid @RequestBody UserDtoValidator user) {
         userService.registration(UserDto.fromDtoToEntity(user));
         return ResponseEntity.ok("Пользователь зарегистрирован");
 
@@ -41,6 +36,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@NotNull @PathVariable Long id) {
         Log.error("Error: Not found deleted User with id " + id);
-        return ResponseEntity.ok(userService.deleteUser(id));
+        userService.deleteUser(id);
+        return ResponseEntity.ok("Delete");
     }
 }
