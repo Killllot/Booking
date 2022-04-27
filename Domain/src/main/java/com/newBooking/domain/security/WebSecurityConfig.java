@@ -1,8 +1,8 @@
-package com.newBooking.domain.security;
+package com.newBooking.domain.Security;
 
-import com.newBooking.domain.security.securityServices.UserDetailsServiceImpl;
-import com.newBooking.domain.security.jwt.AuthEntryPointJwt;
-import com.newBooking.domain.security.jwt.AuthTokenFilter;
+import com.newBooking.domain.Security.securityServices.UserDetailsServiceImpl;
+import com.newBooking.domain.Security.jwt.AuthEntryPointJwt;
+import com.newBooking.domain.Security.jwt.AuthTokenFilter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

@@ -1,4 +1,4 @@
-package com.newBooking.domain.security.securityServices;
+package com.newBooking.domain.Security.securityServices;
 
 import com.newBooking.domain.Entity.UserEntity;
 import com.newBooking.domain.Repository.UserRepository;

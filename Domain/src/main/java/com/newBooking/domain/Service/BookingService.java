@@ -45,19 +45,9 @@ public class BookingService {
             throw new RuntimeException("Время бронирования не может быть отрицательным и должно быть больше "+ minimumBookingDuration +" минут");
         }
 
-        List<BookingEntity> list = bookingRepository.findAll();
-        var alreadyCreatedBooking = list.stream()
-                .filter(value -> value.getRoomEntityList().contains(room))
-                .anyMatch(value ->
-                value.getFromUtc().compareTo(booking.getFromUtc())<=0
-                &&value.getToUtc().compareTo(booking.getFromUtc())>=0
-                ||value.getFromUtc().compareTo(booking.getToUtc())<=0
-                &&value.getToUtc().compareTo(booking.getToUtc())>=0
-                ||value.getFromUtc().compareTo(booking.getFromUtc())==0
-                &&value.getToUtc().compareTo(booking.getToUtc())==0
-        );
-        if(alreadyCreatedBooking) {
-            throw new RuntimeException("Бронирование с такой датой уже существует");
+        var newAlreadyCreatedBooking = bookingRepository.findBookingEntitiesByFromUtcIsBeforeAndToUtcIsAfter(booking.getFromUtc(),booking.getToUtc());
+        if(newAlreadyCreatedBooking.isEmpty()) {
+            throw new RuntimeException("Бронирование с такой датой уже существует1");
         }
 
         List <RoomEntity> newlist = new ArrayList<>();

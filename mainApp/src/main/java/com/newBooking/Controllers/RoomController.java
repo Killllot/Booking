@@ -31,7 +31,6 @@ public class RoomController {
     public ResponseEntity createRoom(@Valid @RequestBody RoomDtoValidator room) {
 
         return ResponseEntity.ok(RoomMapper.toModel(roomService.createRoom(RoomDto.fromDtoToEntity(room))));
-
     }
 
     @GetMapping

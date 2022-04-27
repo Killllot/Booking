@@ -1,4 +1,4 @@
-package com.newBooking.domain.security.securityServices;
+package com.newBooking.domain.Security.securityServices;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.newBooking.domain.Entity.UserEntity;

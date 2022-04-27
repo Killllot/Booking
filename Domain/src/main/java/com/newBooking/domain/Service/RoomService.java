@@ -33,7 +33,7 @@ public class RoomService {
     }
 
     public List<RoomEntity> getUnoccupiedRooms (LocalDateTime FromUtc, LocalDateTime ToUtc) {
-        if( ChronoUnit.MINUTES.between(FromUtc, ToUtc) <= minimumBookingDuration) {
+        if( ChronoUnit.MINUTES.between(FromUtc, ToUtc) <0) {
             throw new RuntimeException("Время бронирования не может быть отрицательным и должно быть больше "+ minimumBookingDuration +" минут");
         }
         List<RoomEntity> list = roomRepository.findAll().stream()
