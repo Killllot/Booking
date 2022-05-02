@@ -18,17 +18,20 @@ public class BookingEntity {
     private LocalDateTime fromUtc;
     private LocalDateTime toUtc;
     private String Comment;
-    private Long roomId;
+    //private Long roomId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    @ManyToMany
+    /*@ManyToMany
+    @Column(name = "room")
     @JoinTable(
             name = "booking_room",
             joinColumns = @JoinColumn(name = "booking_id"),
-            inverseJoinColumns = @JoinColumn(name = "room_id"))
-    List<RoomEntity> roomEntityList;
+            inverseJoinColumns = @JoinColumn(name = "room_id"))*/
+    @ManyToOne
+    @JoinColumn(name = "room")
+    private RoomEntity room;
 
 }

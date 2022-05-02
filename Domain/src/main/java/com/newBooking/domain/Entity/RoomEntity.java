@@ -18,7 +18,7 @@ public class RoomEntity {
     private String name;
 
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "roomEntityList")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
     List<BookingEntity> bookingEntityList;
 
     public RoomEntity(Long id, String name) {

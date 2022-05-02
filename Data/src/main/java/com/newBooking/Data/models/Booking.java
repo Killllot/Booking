@@ -17,6 +17,6 @@ public class Booking {
     private LocalDateTime fromUtc;
     private LocalDateTime toUtc;
     private String Comment;
-    List<Map<Long,String>> roomEntityList;
+    private Map<Long,String> rooms;
 
 }

@@ -36,7 +36,7 @@ public class BookingService {
             throw  new RuntimeException("Пользователя с таким id не существует");
         }
 
-        RoomEntity room = roomRepository.findById(booking.getRoomId()).orElse(null);
+        RoomEntity room = roomRepository.findById(booking.getRoom().getId()).orElse(null);
         if (room==null) {
             throw new RuntimeException("Комнаты с таким id не существует");
         }
@@ -45,15 +45,13 @@ public class BookingService {
             throw new RuntimeException("Время бронирования не может быть отрицательным и должно быть больше "+ minimumBookingDuration +" минут");
         }
 
-        var newAlreadyCreatedBooking = bookingRepository.findBookingEntitiesByFromUtcIsBeforeAndToUtcIsAfter(booking.getFromUtc(),booking.getToUtc());
-        if(newAlreadyCreatedBooking.isEmpty()) {
-            throw new RuntimeException("Бронирование с такой датой уже существует1");
+        var newAlreadyCreatedBooking = bookingRepository.findBookingEntityByFromUtcIsBeforeAndToUtcAfter(booking.getFromUtc(),booking.getToUtc(),booking.getRoom().getId());
+        if(newAlreadyCreatedBooking.size()!=0) {
+            throw new RuntimeException("Бронирование с такой датой уже существует");
         }
 
-        List <RoomEntity> newlist = new ArrayList<>();
-        newlist.add(room);
         booking.setUser(user);
-        booking.setRoomEntityList(newlist);
+        booking.setRoom(room);
 
         return bookingRepository.save(booking);
     }

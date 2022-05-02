@@ -1,6 +1,7 @@
 package com.newBooking.DTO.Booking;
 
 import com.newBooking.domain.Entity.BookingEntity;
+import com.newBooking.domain.Entity.RoomEntity;
 import com.newBooking.domain.Entity.UserEntity;
 
 public class BookingDto {
@@ -12,7 +13,7 @@ public class BookingDto {
         booking.setToUtc(dto.getToUtc());
         booking.setComment(dto.getComment());
         booking.setUser(new UserEntity(dto.getUserId(), null));
-        booking.setRoomId(dto.getRoomId());
+        booking.setRoom(new RoomEntity(dto.getRoomId(),null));
         return booking;
 
    }
