@@ -1,7 +1,0 @@
-package com.newBooking.domain.Exeption;
-
-public class ConfigurationException extends Exception {
-    public ConfigurationException(String message) {
-        super(message);
-    }
-}

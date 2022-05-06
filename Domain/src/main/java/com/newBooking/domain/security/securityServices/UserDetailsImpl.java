@@ -1,7 +1,7 @@
-package com.newBooking.domain.Security.securityServices;
+package com.newBooking.domain.security.securityServices;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.newBooking.domain.Entity.UserEntity;
+import com.newBooking.domain.entity.UserEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

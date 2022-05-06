@@ -1,7 +1,7 @@
-package com.newBooking.domain.Security.securityServices;
+package com.newBooking.domain.security.securityServices;
 
-import com.newBooking.domain.Entity.UserEntity;
-import com.newBooking.domain.Repository.UserRepository;
+import com.newBooking.domain.entity.UserEntity;
+import com.newBooking.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

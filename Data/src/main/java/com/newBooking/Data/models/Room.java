@@ -1,7 +1,6 @@
 package com.newBooking.Data.models;
 
 
-import com.newBooking.domain.Entity.RoomEntity;
 import lombok.Data;
 
 @Data

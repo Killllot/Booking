@@ -1,7 +1,7 @@
-package com.newBooking.domain.Security.jwt;
+package com.newBooking.domain.security.jwt;
 
 
-import com.newBooking.domain.Security.securityServices.UserDetailsImpl;
+import com.newBooking.domain.security.securityServices.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

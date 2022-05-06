@@ -1,4 +1,4 @@
-package com.newBooking.domain.Security.jwt;
+package com.newBooking.domain.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
