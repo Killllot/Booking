@@ -7,7 +7,7 @@ import javax.validation.constraints.Min;
 import java.util.List;
 
 @Data
-@Entity
+@Entity(name = "rooms")
 public class RoomEntity {
 
     @Id

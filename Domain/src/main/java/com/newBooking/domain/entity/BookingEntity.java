@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data
-@Entity
+@Entity(name = "bookings")
 public class BookingEntity {
 
     @Id
@@ -28,7 +28,7 @@ public class BookingEntity {
             joinColumns = @JoinColumn(name = "booking_id"),
             inverseJoinColumns = @JoinColumn(name = "room_id"))*/
     @ManyToOne
-    @JoinColumn(name = "room")
+    @JoinColumn(name = "room_id")
     private RoomEntity room;
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
     List<BookingEntity> findAll();
-    @Query("from BookingEntity book " +
+    @Query("from bookings book " +
             "where (book.fromUtc<=:fromTime and book.toUtc>=:fromTime OR " +
             "book.fromUtc<=:toTime and book.toUtc>=:toTime OR " +
             "book.fromUtc=:fromTime and book.toUtc=:fromTime ) and " +

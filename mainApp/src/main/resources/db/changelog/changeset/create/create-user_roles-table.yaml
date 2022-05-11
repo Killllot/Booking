@@ -1,0 +1,52 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-user_roles-table
+      author: Kirill F
+      changes:
+        - createTable:
+            tableName: user_roles
+            columns:
+              - column:
+                  name: user_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+  - changeSet:
+      id: addForeignKey-user_role-table
+      author: Kirill F
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: role_id
+            baseTableCatalogName: postgres
+            baseTableName: user_roles
+            baseTableSchemaName: public
+            constraintName: fk_user_role_roles
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableCatalogName: postgres
+            referencedTableName: roles
+            referencedTableSchemaName: public
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableCatalogName: postgres
+            baseTableName: user_roles
+            baseTableSchemaName: public
+            constraintName: fk_user_role_users
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableCatalogName: postgres
+            referencedTableName: users
+            referencedTableSchemaName: public

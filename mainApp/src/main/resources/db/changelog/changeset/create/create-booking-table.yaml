@@ -1,0 +1,78 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-booking
+      author: Kirill F
+      changes:
+        - createTable:
+            tableName: bookings
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: from_utc
+                  type: timestamp without time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: to_utc
+                  type: timestamp without time zone
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment
+                  type: character varying(70)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: room_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: addForeignKey-Booking-User
+      author: Kirill F
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: user_id
+            baseTableCatalogName: postgres
+            baseTableName: bookings
+            baseTableSchemaName: public
+            constraintName: fk_booking_users
+            deferrable: true
+            initiallyDeferred: true
+            onDelete: CASCADE
+            onUpdate: RESTRICT
+            referencedColumnNames: id
+            referencedTableCatalogName: postgres
+            referencedTableName: users
+            referencedTableSchemaName: public
+  -  changeSet:
+        id: addForeignKey-Booking-Room
+        author: Kirill F
+        changes:
+          - addForeignKeyConstraint:
+              baseColumnNames: room_id
+              baseTableCatalogName: postgres
+              baseTableName: bookings
+              baseTableSchemaName: public
+              constraintName: fk_booking_room
+              deferrable: true
+              initiallyDeferred: true
+              onDelete: CASCADE
+              onUpdate: RESTRICT
+              referencedColumnNames: id
+              referencedTableCatalogName: postgres
+              referencedTableName: rooms
+              referencedTableSchemaName: public

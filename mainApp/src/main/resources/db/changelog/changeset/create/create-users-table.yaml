@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-user
+      author: Kirill F
+      changes:
+        - createTable:
+            tableName: users
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: character varying(30)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: character varying(120)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: email
+                  type: character varying(50)
+                  constraints:
+                    nullable: false
