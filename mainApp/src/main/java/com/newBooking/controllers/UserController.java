@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import serilogj.Log;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -35,7 +34,6 @@ public class UserController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity deleteUser(@NotNull @PathVariable Long id) {
-        Log.error("Error: Not found deleted User with id " + id);
         userService.deleteUser(id);
         return ResponseEntity.ok("Delete");
     }
