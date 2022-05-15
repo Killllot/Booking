@@ -7,6 +7,7 @@ import com.newBooking.domain.entity.UserEntity;
 import com.newBooking.domain.entity.security.ERole;
 import com.newBooking.domain.entity.security.Role;
 import com.newBooking.domain.repository.UserRepository;
+import newbooking.testCont.Postgres;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -35,7 +36,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @Testcontainers
 @AutoConfigureMockMvc
-class NewBookingApplicationTests {
+class NewBookingApplicationTests extends Postgres {
 
     @Autowired
     private UserController userController;
@@ -68,11 +69,26 @@ class NewBookingApplicationTests {
     }
 
     @Test
+    public void deleteAllUsers() throws Exception {
+
+        List<UserEntity> users = List.of(
+                UserEntity.builder().username("Artem").email("sasd@ad.com").password("password").roles(Set.of(new Role(ERole.ROLE_USER))).build(),
+                UserEntity.builder().username("Andrea").email("adwwq@ad.com").password("password1").roles(Set.of(new Role(ERole.ROLE_ADMIN))).build());
+
+        userRepository.deleteAll();
+
+        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/api/users/getAll"));
+
+        response.andExpect(MockMvcResultMatchers.status().isOk());
+        response.andExpect(MockMvcResultMatchers.jsonPath("$.size()", CoreMatchers.is(users.size())));
+
+    }
+    @Test
     public void getAllUsers() throws Exception {
 
         List<UserEntity> users = List.of(
-                UserEntity.builder().username("Kirill").email("ssas@ad.com").password("password").roles(Set.of(new Role(ERole.ROLE_USER))).build(),
-                UserEntity.builder().username("Andrea").email("add@ad.com").password("password1").roles(Set.of(new Role(ERole.ROLE_ADMIN))).build());
+                UserEntity.builder().username("Artem").email("sasd@ad.com").password("password").roles(Set.of(new Role(ERole.ROLE_USER))).build(),
+                UserEntity.builder().username("Andrea").email("adwwq@ad.com").password("password1").roles(Set.of(new Role(ERole.ROLE_ADMIN))).build());
 
         userRepository.saveAll(users);
 

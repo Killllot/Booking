@@ -11,7 +11,14 @@ import org.testcontainers.junit.jupiter.Container;
 public class Postgres {
 
     @Container
-    public static final PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:latest");
+    public static final PostgreSQLContainer container;
 
+    static {
+        container = new PostgreSQLContainer<>("postgres:latest")
+                .withDatabaseName("some-postgres")
+                .withPassword("Kirill")
+                .withUsername("postgres");
 
+        container.start();
+    }
 }
