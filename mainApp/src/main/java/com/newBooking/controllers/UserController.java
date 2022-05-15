@@ -27,6 +27,11 @@ public class UserController {
 
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity getAll () {
+        return ResponseEntity.ok(userService.getAll());
+    }
+
     @GetMapping
     public ResponseEntity getOneUser (@NotNull @RequestParam Long id) {
 
