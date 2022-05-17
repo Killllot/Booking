@@ -3,6 +3,7 @@ package com.newBooking.domain.service.impl;
 import com.newBooking.domain.entity.UserEntity;
 import com.newBooking.domain.repository.RoleRepository;
 import com.newBooking.domain.repository.UserRepository;
+import com.newBooking.domain.service.Interface.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +13,7 @@ import java.util.List;
 
 @Service
 @Slf4j
-public class UserServiceImp implements com.newBooking.domain.service.Interface.UserService {
+public class UserServiceImp implements UserService {
 
     @Value("${const.minimumUserNameLength}")
     private long minimumNameLength;
@@ -29,30 +30,12 @@ public class UserServiceImp implements com.newBooking.domain.service.Interface.U
     }
 
     @Override
-    public UserEntity registration (UserEntity user)  {
-        if(userRepository.findByUsername(user.getUsername()).isPresent()) {
-            throw  new RuntimeException("Пользователь с таким именем уже существует");
-        }
-        if(user.getUsername().length()< minimumNameLength) {
-            throw  new RuntimeException("Имя пользователя должно быть длиннее " +
-                    minimumNameLength + " символов");
-        }
-        return userRepository.save(user);
-    }
-
-    @Override
     public List<UserEntity> getAll() {
         List<UserEntity> result = userRepository.findAll();
         log.info("IN getAll - {} users found", result);
         return result;
     }
 
-    @Override
-    public UserEntity findByUsername(String name) {
-        UserEntity user = userRepository.findByUsername(name).orElse(null);
-        log.info("IN findByUsername - user: {} found by username: {}",user, name);
-        return user;
-    }
 
     @Override
     public UserEntity getUser(Long id) {

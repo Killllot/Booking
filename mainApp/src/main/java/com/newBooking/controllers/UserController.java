@@ -20,12 +20,6 @@ public class UserController {
     @Autowired
     private UserServiceImp userService;
 
-    @PostMapping
-    public ResponseEntity registration (@Valid @RequestBody ValidatedUserDto user) {
-        userService.registration(UserDto.fromDtoToEntity(user));
-        return ResponseEntity.ok("Пользователь зарегистрирован");
-
-    }
 
     @GetMapping("/getAll")
     public ResponseEntity getAll () {
@@ -37,7 +31,7 @@ public class UserController {
 
         return ResponseEntity.ok(UserMapper.toModel(userService.getUser(id)));
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteUser(@NotNull @PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok("Delete");
