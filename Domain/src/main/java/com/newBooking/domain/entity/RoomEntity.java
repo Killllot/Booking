@@ -1,5 +1,7 @@
 package com.newBooking.domain.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import java.util.List;
 
 @Data
 @Entity(name = "rooms")
+@Builder
+@AllArgsConstructor
 public class RoomEntity {
 
     @Id

@@ -1,5 +1,7 @@
 package com.newBooking.domain.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,7 +9,11 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity(name = "bookings")
+@AllArgsConstructor
+@Builder
 public class BookingEntity {
+    public BookingEntity() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

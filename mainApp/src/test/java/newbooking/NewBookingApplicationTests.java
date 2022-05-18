@@ -49,9 +49,6 @@ class NewBookingApplicationTests extends Postgres {
     private BookingController bookingController;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private MockMvc mockMvc;
 
     @Test
@@ -66,6 +63,15 @@ class NewBookingApplicationTests extends Postgres {
         this.mockMvc.perform(get("/api/users/getAll"))
                 .andDo(print())
                 .andExpect(status().is4xxClientError());
+
+    }
+
+    @Test
+    @WithMockUser
+    public void correctLoginTest () throws Exception {
+        this.mockMvc.perform(get("/api/users/getAll"))
+                .andDo(print())
+                .andExpect(status().isOk());
 
     }
 

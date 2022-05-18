@@ -9,6 +9,7 @@ import com.newBooking.domain.entity.security.Role;
 import com.newBooking.domain.repository.UserRepository;
 import newbooking.testCont.Postgres;
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,6 @@ class UserServiceImpTest extends Postgres {
     @Autowired
     private MockMvc mockMvc;
 
-
     @Test
     @WithMockUser
     void getAll() throws Exception{
@@ -67,6 +67,10 @@ class UserServiceImpTest extends Postgres {
                 UserEntity.builder().username("Andrea").email("adwwq@ad.com").password("password1").roles(Set.of(new Role(ERole.ROLE_ADMIN))).build());
 
         userRepository.saveAll(users);
+
+        Assertions.assertNotNull(users);
+        Assertions.assertNotNull(users.get(0).getId());
+        Assertions.assertNotNull(users.get(1).getId());
 
         ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/api/users/getAll"));
 
@@ -86,10 +90,9 @@ class UserServiceImpTest extends Postgres {
 
         userRepository.saveAll(users);
         UserEntity testUser = userRepository.getById(users.get(1).getId());
-        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.delete("/api/users?id=" + testUser.getId()));
+        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/api/users?id=" + testUser.getId()));
 
         response.andExpect(MockMvcResultMatchers.status().isOk());
-        response.andExpect(jsonPath("$.size()", CoreMatchers.is(1)));
 
     }
 
