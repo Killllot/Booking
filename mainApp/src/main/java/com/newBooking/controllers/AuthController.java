@@ -11,6 +11,8 @@ import com.newBooking.domain.security.payload.request.LoginRequest;
 import com.newBooking.domain.security.payload.request.SignupRequest;
 import com.newBooking.domain.security.payload.response.MessageResponse;
 import com.newBooking.domain.security.payload.response.UserInfoResponse;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -32,6 +34,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
+@Api(value = "Контроллер авторизации")
 public class AuthController {
     
     @Autowired
@@ -49,6 +52,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @ApiOperation("Метод для входа пользователя")
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
@@ -72,6 +76,7 @@ public class AuthController {
                         roles));
     }
 
+    @ApiOperation("Метод для регистрации пользователя")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -123,6 +128,7 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
+    @ApiOperation("Метод для выхода пользователя")
     @PostMapping("/signout")
     public ResponseEntity<?> logoutUser() {
         ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
