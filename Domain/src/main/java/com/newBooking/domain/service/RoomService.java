@@ -37,7 +37,7 @@ public class RoomService {
             throw new RuntimeException("Время бронирования не может быть отрицательным и должно быть больше "+ minimumBookingDuration +" минут");
         }
         List<RoomEntity> list = roomRepository.findAll().stream()
-                .filter(value -> value.getBookingEntityList().stream().noneMatch(data ->
+                .filter(value -> value.getBookings().stream().noneMatch(data ->
                         data.getFromUtc().compareTo(FromUtc) <= 0
                                 && data.getToUtc().compareTo(FromUtc) >= 0
                                 || data.getFromUtc().compareTo(ToUtc) <= 0

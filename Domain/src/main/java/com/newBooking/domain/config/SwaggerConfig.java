@@ -1,4 +1,4 @@
-package com.newBooking.domain.swagger;
+package com.newBooking.domain.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Configuration
 public class SwaggerConfig {
-    private static final String AUTHORIZATION_HEADER = "Authorization";
+    private static final String AUTHORIZATION_HEADER = "";
 
     private ApiInfo apiInfo() {
         return new ApiInfo("Booking Rest APIs",
@@ -31,7 +31,7 @@ public class SwaggerConfig {
 
     @Bean
     public Docket api() {
-        return new Docket(DocumentationType.OAS_30)
+        return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.any())
@@ -50,7 +50,7 @@ public class SwaggerConfig {
 
     List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope
-                = new AuthorizationScope("global", "accessEverything");
+                = new AuthorizationScope("A", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
         return Arrays.asList(new SecurityReference(AUTHORIZATION_HEADER, authorizationScopes));

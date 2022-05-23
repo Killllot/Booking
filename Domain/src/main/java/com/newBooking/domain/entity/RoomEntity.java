@@ -3,6 +3,7 @@ package com.newBooking.domain.entity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity(name = "rooms")
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class RoomEntity {
 
     @Id
@@ -22,15 +24,14 @@ public class RoomEntity {
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
-    List<BookingEntity> bookingEntityList;
+    List<BookingEntity> bookings;
 
     public RoomEntity(Long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public RoomEntity() {
-    }
+
 
 
 }

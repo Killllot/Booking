@@ -3,15 +3,14 @@ package newbooking.service;
 import com.newBooking.controllers.BookingController;
 import com.newBooking.controllers.RoomController;
 import com.newBooking.controllers.UserController;
+import com.newBooking.domain.entity.RoomEntity;
 import com.newBooking.domain.entity.UserEntity;
 import com.newBooking.domain.entity.security.ERole;
 import com.newBooking.domain.entity.security.Role;
 import com.newBooking.domain.repository.UserRepository;
 import newbooking.testCont.Postgres;
 import org.hamcrest.CoreMatchers;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -57,9 +56,8 @@ class UserServiceImpTest extends Postgres {
     @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    @WithMockUser
-    void getAll() throws Exception{
+    @BeforeEach
+    private void preparation() {
         userRepository.deleteAll();
 
         List<UserEntity> users = List.of(
@@ -67,6 +65,12 @@ class UserServiceImpTest extends Postgres {
                 UserEntity.builder().username("Andrea").email("adwwq@ad.com").password("password1").roles(Set.of(new Role(ERole.ROLE_ADMIN))).build());
 
         userRepository.saveAll(users);
+    }
+
+    @Test
+    @WithMockUser
+    void getAll() throws Exception{
+        var users = userRepository.findAll();
 
         Assertions.assertNotNull(users);
         Assertions.assertNotNull(users.get(0).getId());
@@ -82,13 +86,7 @@ class UserServiceImpTest extends Postgres {
     @Test
     @WithMockUser
     void getUser() throws Exception{
-        userRepository.deleteAll();
-
-        List<UserEntity> users = List.of(
-                UserEntity.builder().username("Artem").email("sasd@ad.com").password("password").roles(Set.of(new Role(ERole.ROLE_USER))).build(),
-                UserEntity.builder().username("Andrea").email("adwwq@ad.com").password("password1").roles(Set.of(new Role(ERole.ROLE_ADMIN))).build());
-
-        userRepository.saveAll(users);
+        var users = userRepository.findAll();
         UserEntity testUser = userRepository.getById(users.get(1).getId());
         ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/api/users?id=" + testUser.getId()));
 

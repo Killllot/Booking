@@ -8,11 +8,14 @@ import com.newBooking.domain.entity.security.Role;
 import com.newBooking.domain.repository.BookingRepository;
 import com.newBooking.domain.repository.RoomRepository;
 import com.newBooking.domain.repository.UserRepository;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -44,20 +47,29 @@ class BookingServiceTest {
     private RoomRepository roomRepository;
 
     @Autowired
+    PasswordEncoder encoder;
+
+    @Autowired
     private MockMvc mockMvc;
 
-    @Test
-    @WithMockUser
-    void createBooking() throws Exception{
+    @BeforeEach
+    private void preparation() {
         bookingRepository.deleteAll();
         userRepository.deleteAll();
         roomRepository.deleteAll();
 
-        UserEntity addUser = UserEntity.builder().username("Artem").email("sasd@ad.com").password("password").roles(Set.of(new Role(ERole.ROLE_USER))).build();
+        UserEntity addUser = UserEntity.builder().username("Artem").email("sasd@ad.com").password(encoder.encode("password")).roles(Set.of(new Role(ERole.ROLE_USER))).build();
         RoomEntity addRoom = RoomEntity.builder().name("Paradise").build();
 
         userRepository.save(addUser);
         roomRepository.save(addRoom);
+    }
+
+    @Test
+    @WithMockUser
+    void createBooking() throws Exception{
+        UserEntity addUser = userRepository.findAll().get(0);
+        RoomEntity addRoom = roomRepository.findAll().get(0);
 
         Optional<UserEntity> testUser = userRepository.findByUsername(addUser.getUsername());
         Optional<RoomEntity> testRoom = roomRepository.findByName(addRoom.getName());
@@ -80,7 +92,8 @@ class BookingServiceTest {
             assertNotNull(testBook.getUser());
             assertNotNull(testBook.getComment());
 
-            ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/booking"));
+            var users = userRepository.findAll();
+            ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/signup"));
 
             response.andExpect(MockMvcResultMatchers.status().isOk());
         }
@@ -90,12 +103,8 @@ class BookingServiceTest {
     @Test
     @WithMockUser
     void getBooking() throws Exception{
-        bookingRepository.deleteAll();
-        userRepository.deleteAll();
-        roomRepository.deleteAll();
-
-        UserEntity addUser = UserEntity.builder().username("Artem").email("sasd@ad.com").password("password").roles(Set.of(new Role(ERole.ROLE_USER))).build();
-        RoomEntity addRoom = RoomEntity.builder().name("Paradise").build();
+        UserEntity addUser = userRepository.findAll().get(0);
+        RoomEntity addRoom = roomRepository.findAll().get(0);
 
         userRepository.save(addUser);
         roomRepository.save(addRoom);
@@ -125,7 +134,7 @@ class BookingServiceTest {
             if(cheakBook.size()==1){
                 ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/api/booking?bookingId=" +cheakBook.get(0).getId() ));
 
-                response.andExpect(MockMvcResultMatchers.status().isOk());
+                response.andExpect(MockMvcResultMatchers.status().is3xxRedirection());
             }
         }
 

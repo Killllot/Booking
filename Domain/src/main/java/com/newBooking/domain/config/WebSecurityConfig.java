@@ -1,4 +1,4 @@
-package com.newBooking.domain.security;
+package com.newBooking.domain.config;
 
 import com.newBooking.domain.security.securityServices.UserDetailsServiceImpl;
 import com.newBooking.domain.security.jwt.AuthEntryPointJwt;
@@ -53,21 +53,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    private static final String[] AUTH_WHITELIST = {
+            "/api/auth/**",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/v3/api-docs",
+            "/webjars/**",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/swagger-ui-custom.html",
+            "/csrf",
+            "/"
+
+    };
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/swagger-ui.html/").permitAll()
-                .antMatchers("/swagger-ui.html").permitAll()
-                .antMatchers("/swagger-ui/**").permitAll()
-                .antMatchers("/webjars/**").permitAll()
-                .antMatchers("/swagger-resources/**").permitAll()
-                .antMatchers("/v3/api-docs").permitAll()
-                .antMatchers("/csrf").permitAll()
-                .antMatchers("/").permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated();
 
         http.headers().frameOptions().sameOrigin();
