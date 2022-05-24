@@ -57,19 +57,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/auth/**",
             "/swagger-resources/**",
             "/swagger-ui/**",
+            "/swagger-ui-openapi.html/**",
             "/v3/api-docs",
-            "/webjars/**",
-            "/swagger-ui/**",
-            "/v3/api-docs/**",
-            "/swagger-ui-custom.html",
-            "/csrf",
-            "/"
+            "/webjars/**"
 
     };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
+
+        http.cors().and()
+                .csrf().disable()
+                .headers()
+                .frameOptions()
+                .deny()
+                .and()
+                .authorizeRequests()
+                .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
