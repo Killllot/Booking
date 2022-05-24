@@ -34,8 +34,8 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.OAS_30)
+    public Docket api(){
+        return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()))
@@ -44,21 +44,19 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
-    private ApiKey apiKey() {
-        return new ApiKey(AUTHORIZATION_HEADER, "JWT", "header");
+
+    private ApiKey apiKey(){
+        return new ApiKey("JWT", "Authorization", "header");
     }
 
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(defaultAuth())
-                .build();
+    private SecurityContext securityContext(){
+        return SecurityContext.builder().securityReferences(defaultAuth()).build();
     }
 
-    List<SecurityReference> defaultAuth() {
-        AuthorizationScope authorizationScope
-                = new AuthorizationScope("global", "accessEverything");
+    private List<SecurityReference> defaultAuth(){
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Arrays.asList(new SecurityReference(AUTHORIZATION_HEADER, authorizationScopes));
+        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
     }
 }

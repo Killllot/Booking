@@ -18,13 +18,13 @@ import java.util.Date;
 public class JwtUtils {
   private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-  @Value("${token.app.jwtSecret}")
+  @Value("${token.jwtSecret}")
   private String jwtSecret;
 
-  @Value("${token.app.jwtExpirationMs}")
+  @Value("${token.jwtExpirationMs}")
   private int jwtExpirationMs;
 
-  @Value("${token.app.jwtCookieName}")
+  @Value("${token.jwtCookieName}")
   private String jwtCookie;
 
   public String getJwtFromCookies(HttpServletRequest request) {
