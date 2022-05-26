@@ -36,15 +36,7 @@ public class RoomService {
         if( ChronoUnit.MINUTES.between(FromUtc, ToUtc) <0) {
             throw new RuntimeException("Время бронирования не может быть отрицательным и должно быть больше "+ minimumBookingDuration +" минут");
         }
-        List<RoomEntity> list = roomRepository.findAll().stream()
-                .filter(value -> value.getBookings().stream().noneMatch(data ->
-                        data.getFromUtc().compareTo(FromUtc) <= 0
-                                && data.getToUtc().compareTo(FromUtc) >= 0
-                                || data.getFromUtc().compareTo(ToUtc) <= 0
-                                && data.getToUtc().compareTo(ToUtc) >= 0
-                                || data.getFromUtc().compareTo(FromUtc) == 0
-                                && data.getToUtc().compareTo(ToUtc) == 0))
-                .collect(Collectors.toList());
+        List<RoomEntity> list = roomRepository.findRoomEntityByBookingsBetween(FromUtc,ToUtc);
         return list;
     }
 }

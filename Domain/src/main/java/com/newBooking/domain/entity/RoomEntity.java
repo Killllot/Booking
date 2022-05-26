@@ -31,7 +31,4 @@ public class RoomEntity {
         this.name = name;
     }
 
-
-
-
 }

@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan("com.newBooking.domain")
 @ComponentScan("com.newBooking")
 @PropertySource("classpath:mySecretProperties.properties")
-@SpringBootApplication(scanBasePackages = "com.newBooking")
+@SpringBootApplication
 public class BookingApp {
     public static void main(String[] args) {
         SpringApplication.run(BookingApp.class, args);
