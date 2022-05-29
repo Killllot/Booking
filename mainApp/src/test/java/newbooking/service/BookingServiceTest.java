@@ -92,10 +92,6 @@ class BookingServiceTest {
             assertNotNull(testBook.getUser());
             assertNotNull(testBook.getComment());
 
-            var users = userRepository.findAll();
-            ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/signup"));
-
-            response.andExpect(MockMvcResultMatchers.status().isOk());
         }
 
     }

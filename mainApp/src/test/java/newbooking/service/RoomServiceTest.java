@@ -48,10 +48,4 @@ class RoomServiceTest {
 
     }
 
-    @Test
-    @WithMockUser
-    void getUnoccupiedRooms() {
-
-
-    }
 }
