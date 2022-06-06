@@ -2,6 +2,7 @@ package com.newBooking.domain.service;
 
 
 import com.newBooking.domain.entity.BookingEntity;
+import com.newBooking.domain.entity.Page;
 import com.newBooking.domain.entity.RoomEntity;
 import com.newBooking.domain.entity.UserEntity;
 import com.newBooking.domain.repository.BookingRepository;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 
 @Service
@@ -61,4 +63,20 @@ public class BookingService {
         }
         return booking;
     }
+
+
+    public List<BookingEntity> getBookingByPage(Long quantity, Long page) {
+        Long first = 1+(page-1)*quantity;
+        Long last = page*quantity;
+        Long count = bookingRepository.getCountBookings();
+        List<BookingEntity> bookings = bookingRepository.findBookingEntitiesByPage(first, last).orElse(null);
+
+        return bookings;
+    }
+
+    public List<BookingEntity> getAll() {
+        return bookingRepository.findAll();
+    }
 }
+
+

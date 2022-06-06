@@ -14,13 +14,16 @@ import java.util.Optional;
 
 public interface RoomRepository extends JpaRepository<RoomEntity,Long> {
     Optional<RoomEntity> findByName(String name);
-    List<RoomEntity> findAll();
     @Query(
-            "from rooms " +
-                    " rooms JOIN bookings book on rooms.id = book.room.id" +
-                    " where book.fromUtc <=:fromTime and book.toUtc <=:fromTime OR " +
-                    " book.fromUtc >=:toTime and book.toUtc >=:toTime  "
+            value = "SELECT DISTINCT r.id, r.name FROM rooms r " +
+                    "LEFT JOIN bookings b ON r.id = b.room_id " +
+                    "WHERE " +
+                    "r.id NOT IN (SELECT bookings.room_id FROM bookings " +
+                    "WHERE from_utc BETWEEN ?1 AND ?2 OR to_utc BETWEEN ?1 AND ?2 )" +
+                    "OR from_utc IS NULL " +
+                    "ORDER BY r.id ",
+            nativeQuery = true
     )
-    List<RoomEntity> findRoomEntityByBookingsBetween(@Param("fromTime") LocalDateTime fromUtc,@Param("toTime") LocalDateTime toUtc);
+    Optional<List<RoomEntity>> findRoomEntityByBookingsBetween(LocalDateTime fromUtc,LocalDateTime toUtc);
 
 }

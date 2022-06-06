@@ -7,9 +7,9 @@ import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
-    List<BookingEntity> findAll();
     @Query("from bookings book " +
             "where (book.fromUtc<=:fromTime and book.toUtc>=:fromTime OR " +
             "book.fromUtc<=:toTime and book.toUtc>=:toTime OR " +
@@ -17,4 +17,15 @@ public interface BookingRepository extends JpaRepository<BookingEntity, Long> {
             "book.room.id=:room")
     List<BookingEntity> findBookingEntityByFromUtcIsBeforeAndToUtcAfter(@Param("fromTime") LocalDateTime fromUtc,@Param("toTime") LocalDateTime toUtc,@Param("room") Long roomId);
 
+    @Query (value = "SELECT * FROM bookings b " +
+            "ORDER  BY from_utc " +
+            "OFFSET ?1 " +
+            "LIMIT ?2 " ,
+            nativeQuery = true)
+    Optional<List<BookingEntity>> findBookingEntitiesByPage(Long from, Long to);
+
+
+    @Query(value = "SELECT COUNT(*) from bookings",
+        nativeQuery = true)
+    Long getCountBookings();
 }

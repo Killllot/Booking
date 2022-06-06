@@ -31,4 +31,13 @@ public class BookingEntity {
     @JoinColumn(name = "room_id")
     private RoomEntity room;
 
+    BookingEntity(Long id, LocalDateTime from_utc, LocalDateTime to_utc,String comment, Long room_id,Long user_id) {
+        this.id=id;
+        this.fromUtc = from_utc;
+        this.toUtc = to_utc;
+        this.Comment = comment;
+        this.room= new RoomEntity(room_id,null);
+        this.user= new UserEntity(user_id,null);
+    }
+
 }

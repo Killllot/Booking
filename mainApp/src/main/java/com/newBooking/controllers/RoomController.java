@@ -27,13 +27,13 @@ public class RoomController {
     @Autowired
     private RoomService roomService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity createRoom(@Valid @RequestBody ValidatedRoomDto room) {
 
         return ResponseEntity.ok(RoomMapper.toModel(roomService.createRoom(RoomDto.fromDtoToEntity(room))));
     }
 
-    @GetMapping
+    @GetMapping("/getUnoccupiedRooms")
     public ResponseEntity<List<Room>> getUnoccupiedRooms(@NotNull @RequestParam("FromUtc")
                                                          @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
                                                                  LocalDateTime FromUtc,
@@ -46,4 +46,12 @@ public class RoomController {
                     .collect(Collectors.toList()));
 
     }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<List<Room>> getAll() {
+        return ResponseEntity.ok(roomService.getAll().stream()
+                .map(value -> new Room(value.getId(), value.getName()))
+                .collect(Collectors.toList()));
+    }
+
 }

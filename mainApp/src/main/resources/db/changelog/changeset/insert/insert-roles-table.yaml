@@ -9,26 +9,17 @@ databaseChangeLog:
             tableName: roles
             columns:
               - column:
-                  name: id
-                  value: "1"
-              - column:
                   name: name
                   value: "ROLE_USER"
         - insert:
             tableName: roles
             columns:
               - column:
-                  name: id
-                  value: "2"
-              - column:
                   name: name
                   value: "ROLE_MODERATOR"
         - insert:
             tableName: roles
             columns:
-              - column:
-                  name: id
-                  value: "3"
               - column:
                   name: name
                   value: "ROLE_ADMIN"

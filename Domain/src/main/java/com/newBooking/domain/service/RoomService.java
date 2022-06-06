@@ -33,10 +33,14 @@ public class RoomService {
     }
 
     public List<RoomEntity> getUnoccupiedRooms (LocalDateTime FromUtc, LocalDateTime ToUtc) {
-        if( ChronoUnit.MINUTES.between(FromUtc, ToUtc) <0) {
+        if( ChronoUnit.MINUTES.between(FromUtc, ToUtc) <minimumBookingDuration) {
             throw new RuntimeException("Время бронирования не может быть отрицательным и должно быть больше "+ minimumBookingDuration +" минут");
         }
-        List<RoomEntity> list = roomRepository.findRoomEntityByBookingsBetween(FromUtc,ToUtc);
+        List<RoomEntity> list = roomRepository.findRoomEntityByBookingsBetween(FromUtc,ToUtc).orElse(null);
         return list;
+    }
+
+    public List<RoomEntity> getAll () {
+        return roomRepository.findAll();
     }
 }
