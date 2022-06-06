@@ -10,6 +10,7 @@ import com.newBooking.Data.mapper.booking.BookingMapper;
 import com.newBooking.domain.service.BookingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -47,9 +48,13 @@ public class BookingController {
                 .collect(Collectors.toList()),HttpStatus.FOUND);
     }
 
-    @GetMapping("/getByPage")
+    /*@GetMapping("/getByPage")
     public ResponseEntity<List<BookingEntity>> getBookingByPage (@RequestParam Long quantity, @RequestParam Long page) {
         return new ResponseEntity<>(bookingService.getBookingByPage(quantity,page), HttpStatus.FOUND);
-    }
+    }*/
 
+    @GetMapping("/getByPage")
+    public ResponseEntity<?> getBookingByPage (Pageable pageable) {
+        return new ResponseEntity<>(bookingService.getBookingByPage(pageable), HttpStatus.FOUND);
+    }
 }

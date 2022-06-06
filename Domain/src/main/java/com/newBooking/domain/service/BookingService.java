@@ -2,7 +2,6 @@ package com.newBooking.domain.service;
 
 
 import com.newBooking.domain.entity.BookingEntity;
-import com.newBooking.domain.entity.Page;
 import com.newBooking.domain.entity.RoomEntity;
 import com.newBooking.domain.entity.UserEntity;
 import com.newBooking.domain.repository.BookingRepository;
@@ -10,6 +9,8 @@ import com.newBooking.domain.repository.RoomRepository;
 import com.newBooking.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
@@ -65,13 +66,19 @@ public class BookingService {
     }
 
 
-    public List<BookingEntity> getBookingByPage(Long quantity, Long page) {
+    /*public List<BookingEntity> getBookingByPage(Long quantity, Long page) {
         Long first = 1+(page-1)*quantity;
         Long last = page*quantity;
         Long count = bookingRepository.getCountBookings();
         List<BookingEntity> bookings = bookingRepository.findBookingEntitiesByPage(first, last).orElse(null);
 
         return bookings;
+    }*/
+
+    public Page<BookingEntity> getBookingByPage(Pageable pageable) {
+//        List<BookingEntity> bookings = bookingRepository.findBookingEntitiesByPage(first, last).orElse(null);
+
+        return bookingRepository.findAll(pageable);
     }
 
     public List<BookingEntity> getAll() {
