@@ -40,4 +40,10 @@ public class BookingEntity {
         this.user= new UserEntity(user_id,null);
     }
 
+    @Override
+    public String toString() {
+        return "Booking [id=" + id + ", from_utc=" + fromUtc.toString() + ", to_utc" + toUtc.toString() + ", comment=" +
+                "" + Comment +", room_id=" + room.getId().toString() + ", user_id=" + user.getId().toString()+ " ]";
+    }
+
 }

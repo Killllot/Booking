@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -76,9 +77,15 @@ public class BookingService {
     }*/
 
     public Page<BookingEntity> getBookingByPage(Pageable pageable) {
-//        List<BookingEntity> bookings = bookingRepository.findBookingEntitiesByPage(first, last).orElse(null);
+        Page<BookingEntity> bookings = bookingRepository.findAll(pageable);
 
-        return bookingRepository.findAll(pageable);
+        return bookings;
+    }
+
+    public Page<BookingEntity> getBookingByPageWithSorting(Pageable pageable) {
+        Page<BookingEntity> bookings = bookingRepository.findAll(pageable);
+
+        return bookings;
     }
 
     public List<BookingEntity> getAll() {

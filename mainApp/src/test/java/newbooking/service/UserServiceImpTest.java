@@ -7,6 +7,7 @@ import com.newBooking.domain.entity.RoomEntity;
 import com.newBooking.domain.entity.UserEntity;
 import com.newBooking.domain.entity.security.ERole;
 import com.newBooking.domain.entity.security.Role;
+import com.newBooking.domain.repository.RoleRepository;
 import com.newBooking.domain.repository.UserRepository;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.*;
@@ -73,6 +74,9 @@ class UserServiceImpTest {
 
     @Autowired
     private PasswordEncoder encoder;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @BeforeEach
     private void preparation() {
@@ -159,12 +163,10 @@ class UserServiceImpTest {
     @Test
     void createUser_return200() throws Exception {
 
-        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/signup")
+        ResultActions response = mockMvc.perform(MockMvcRequestBuilders.post("/api/auth/signin")
                         .contentType(APPLICATION_JSON)
-                        .content("{\"username\":\"Кирилл\", " +
-                                " \"password\":\"passwordTest\", " +
-                                " \"email\":\"testPost@avs.com\", " +
-                                " \"role\":[ \"user \",\" admin\" ] }"))
+                        .content("{\"username\":\"Artem\", " +
+                                " \"password\":\"password\" }"))
                 .andDo(print())
                 .andExpect(status().isOk());
 
