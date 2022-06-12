@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/java
+    username: postgres
+    password: Kirill
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  devtools:
+    restart:
+      enabled: false
+  liquibase:
+    enabled: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
