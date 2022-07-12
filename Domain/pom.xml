@@ -13,18 +13,7 @@
 
     <artifactId>Domain</artifactId>
     <dependencies>
-        <dependency>
-            <groupId>com.newBooking</groupId>
-            <artifactId>Data</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.newBooking</groupId>
-            <artifactId>Serilogj</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+
     </dependencies>
 
     <properties>

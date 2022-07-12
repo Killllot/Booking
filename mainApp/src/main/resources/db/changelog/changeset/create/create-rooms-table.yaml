@@ -1,0 +1,18 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-room
+      author: Kirill F
+      changes:
+        - createTable:
+            tableName: rooms
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: character varying(30)

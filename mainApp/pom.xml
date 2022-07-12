@@ -22,9 +22,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>com.newBooking</groupId>
-            <artifactId>Serilogj</artifactId>
+            <artifactId>Domain</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
@@ -32,13 +33,8 @@
             <groupId>com.newBooking</groupId>
             <artifactId>Data</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.newBooking</groupId>
-            <artifactId>Domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-
 
     </dependencies>
 
