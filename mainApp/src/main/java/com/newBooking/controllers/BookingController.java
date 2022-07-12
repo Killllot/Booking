@@ -59,8 +59,4 @@ public class BookingController {
                 .collect(Collectors.toList()), HttpStatus.FOUND);
     }
 
-    /*@GetMapping("/getByPage")
-    public ResponseEntity<?> getBookingByPage (Pageable pageable) {
-        return new ResponseEntity<>(bookingService.getBookingByPage(pageable), HttpStatus.FOUND);
-    }*/
 }
